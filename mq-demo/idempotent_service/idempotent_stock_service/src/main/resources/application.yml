@@ -1,0 +1,43 @@
+server:
+  port: 9002
+spring:
+  application:
+    name: stock
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/mq?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false
+    username: root
+    password: root
+  main:
+    allow-bean-definition-overriding: true #当遇到同样名字的时候，是否允许覆盖注册
+  redis:
+    host: 192.168.150.4
+    port: 7000
+    database: 0
+    jedis:
+      pool:
+        max-active: 500
+        max-idle: 1000
+        min-idle: 4
+    password:
+  rabbitmq:
+    virtual-host: /
+    host: 192.168.150.4
+    username: admin
+    password: admin
+    # 消费者监听相关配置
+    listener:
+      simple:
+        retry:
+          # 开启消费者(程序出现异常)重试机制，默认开启并一直重试
+          enabled: true
+          # 最大重试次数
+          max-attempts: 5
+          # 重试间隔时间(毫秒)
+          initial-interval: 3000
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:6868/eureka
+  instance:
+    prefer-ip-address: true
